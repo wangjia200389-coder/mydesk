@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+/* ============================================================
+   my-desk 主题：柔和奶油 + 樱花粉 + 薰衣草 + 薄荷
+   可爱但不过于低龄：低饱和、圆润、轻盈
+   ============================================================ */
+@theme {
+  --font-sans: "Quicksand", "Nunito", system-ui, "Segoe UI", Roboto, sans-serif;
+
+  /* 奶油背景 / 卡片表面 */
+  --color-cream: #fff8f2;
+  --color-cream-deep: #fdeee3;
+  --color-surface: #ffffff;
+
+  /* 文字（柔和的梅灰） */
+  --color-ink-400: #8a7f97;
+  --color-ink-500: #6b6076;
+  --color-ink-700: #4a4055;
+  --color-ink-900: #322a3d;
+
+  /* 樱花粉 主色 */
+  --color-petal-50: #fff1f4;
+  --color-petal-100: #ffe0e8;
+  --color-petal-200: #ffc6d5;
+  --color-petal-300: #ffa6bd;
+  --color-petal-400: #ff8da1;
+  --color-petal-500: #ff6f8c;
+  --color-petal-600: #f04d72;
+
+  /* 薰衣草 辅色 */
+  --color-lavender-50: #f6f2fe;
+  --color-lavender-100: #efe9fd;
+  --color-lavender-200: #e2d8fb;
+  --color-lavender-300: #c8b6f5;
+  --color-lavender-400: #a78bfa;
+  --color-lavender-500: #8b6ff0;
+  --color-lavender-600: #7a57e0;
+
+  /* 薄荷 辅色 */
+  --color-mint-50: #effaf5;
+  --color-mint-200: #c9f0e1;
+  --color-mint-300: #a6e4ce;
+  --color-mint-400: #7fd1b9;
+  --color-mint-500: #54bd9b;
+  --color-mint-700: #3a9c7e;
+
+  /* 奶油黄 点缀 */
+  --color-butter-300: #ffe08a;
+  --color-butter-400: #ffd166;
+
+  /* 圆角与阴影 */
+  --radius-xl2: 1.25rem;
+  --shadow-soft: 0 10px 30px -12px rgba(80, 50, 90, 0.18);
+  --shadow-card: 0 6px 20px -8px rgba(80, 50, 90, 0.14);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-ink-700);
+    background-color: var(--color-cream);
+    background-image:
+      radial-gradient(at 12% 8%, rgba(255, 166, 189, 0.28) 0px, transparent 45%),
+      radial-gradient(at 88% 12%, rgba(167, 139, 250, 0.22) 0px, transparent 42%),
+      radial-gradient(at 75% 92%, rgba(127, 209, 185, 0.2) 0px, transparent 45%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ink-900);
+    font-weight: 600;
+  }
+}
+
+@layer utilities {
+  /* 柔和的滚动条 */
+  .scroll-soft::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scroll-soft::-webkit-scrollbar-thumb {
+    background: var(--color-petal-200);
+    border-radius: 999px;
+  }
+  .scroll-soft::-webkit-scrollbar-thumb:hover {
+    background: var(--color-petal-300);
+  }
+  .scroll-soft::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* 完全隐藏滚动条（如底部导航横向滑动条），保留滑动能力 */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* 移动端安全区适配（配合 <meta viewport-fit=cover>） */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* 去除移动端点击高亮与长按菜单，触感更接近原生 App */
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+}
+
+/* 主滚动区：禁止橡皮筋下拉露出白边，沉浸感更接近 App */
+html,
+body {
+  overscroll-behavior: none;
+}
+
+/* ============================================================
+   自定义动画 keyframes（被 CongratsToast / ReminderLayer 使用）
+   ============================================================ */
+
+@keyframes congrats-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+  }
+  28% {
+    transform: translate(-50%, -50%) scale(1.12);
+    opacity: 1;
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  52% {
+    transform: translate(-50%, -50%) scale(1.03);
+  }
+  64% {
+    transform: translate(-50%, -50%) scale(0.99);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes reminder-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(-22px) scale(0.92);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(3px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   【问题 9】待办事项页面（.todo-page）字体整体调大 1~2px
+   —— 只覆盖待办模块，不影响仪表盘 / 番茄钟 / 便签
+   基础字号从 14 → 15-16px，各级标题/按钮同步增大
+   ============================================================ */
+.todo-page {
+  /* 正文基底：约 15.5px */
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+/* 覆盖 Tailwind 的常见字号 class */
+.todo-page .text-xs {
+  font-size: 13px;
+  line-height: 1.55;
+}
+.todo-page .text-\[11px\] {
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.todo-page .text-\[10px\] {
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+.todo-page .text-sm {
+  font-size: 15px;
+  line-height: 1.6;
+}
+.todo-page .text-\[13px\] {
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.todo-page .text-\[12px\] {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.todo-page .text-base {
+  font-size: 16.5px;
+  line-height: 1.65;
+}
+.todo-page .text-lg {
+  font-size: 19px;
+  line-height: 1.45;
+}
+.todo-page .text-xl {
+  font-size: 21px;
+  line-height: 1.4;
+}
+.todo-page .text-2xl {
+  font-size: 25px;
+  line-height: 1.3;
+}
+.todo-page .text-3xl {
+  font-size: 30px;
+  line-height: 1.25;
+}
+
+/* 按钮 & 输入框内文字也同步略放大（更易点击） */
+.todo-page button {
+  font-size: inherit;
+}
+.todo-page input[type="text"],
+.todo-page input[type="date"],
+.todo-page input[type="time"],
+.todo-page select,
+.todo-page textarea {
+  font-size: 15px;
+  line-height: 1.55;
+}
